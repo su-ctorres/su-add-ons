@@ -1,4 +1,13 @@
-import { Component, Inject, Input, Optional } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Inject,
+  Input,
+  OnDestroy,
+  Optional
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface SuActionButtonsConfig {
@@ -29,16 +38,29 @@ const defaultExclamationCircleIconUrl = 'data:image/svg+xml,%3Csvg xmlns=%22http
   templateUrl: './su-action-buttons.component.html',
   styleUrls: ['./su-action-buttons.component.scss']
 })
-export class SuActionButtonsComponent {
+export class SuActionButtonsComponent implements AfterViewInit, OnDestroy {
   @Input() hostComponent?: any;
   @Input() parentCtrl?: any;
 
   actions: SuActionButton[];
+  shouldRender = false;
+  private mutationObserver?: MutationObserver;
 
   constructor(
+    private elementRef: ElementRef<HTMLElement>,
+    private changeDetectorRef: ChangeDetectorRef,
     @Optional() @Inject('MODULE_PARAMETERS') moduleParameters?: SuActionButtonsConfig
   ) {
     this.actions = this.normalizeAction(moduleParameters);
+  }
+
+  ngAfterViewInit(): void {
+    this.updateRenderState();
+    this.observeContainerChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.mutationObserver?.disconnect();
   }
 
   private normalizeAction(config?: SuActionButtonsConfig): SuActionButton[] {
@@ -61,6 +83,40 @@ export class SuActionButtonsComponent {
 
   markIconFailed(action: SuActionButton): void {
     action.iconLoadFailed = true;
+  }
+
+  private updateRenderState(): void {
+    const shouldRender = this.isAfterLastMainAction();
+
+    if (this.shouldRender !== shouldRender) {
+      this.shouldRender = shouldRender;
+      this.changeDetectorRef.detectChanges();
+    }
+  }
+
+  private observeContainerChanges(): void {
+    const container = this.elementRef.nativeElement.parentElement;
+
+    if (!container) {
+      return;
+    }
+
+    this.mutationObserver = new MutationObserver(() => this.updateRenderState());
+    this.mutationObserver.observe(container, { childList: true });
+  }
+
+  private isAfterLastMainAction(): boolean {
+    let sibling = this.elementRef.nativeElement.nextElementSibling;
+
+    while (sibling) {
+      if (sibling.tagName.toLowerCase() === 'nde-main-actions') {
+        return false;
+      }
+
+      sibling = sibling.nextElementSibling;
+    }
+
+    return true;
   }
 
   private toCssUrl(url: string): string {
