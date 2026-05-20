@@ -5,13 +5,13 @@
 - Name: `su-action-buttons`
 - URL: `https://su-ctorres.github.io/su-add-ons/su-action-buttons/`
 - Configuration JSON Template: [su-action-buttons.json](./su-action-buttons.json)
-- NDE Mapping Slot: `nde-record-actions-bottom`
+- NDE Mapping Slot: `nde-main-actions-after`
 - Component Folder: [`src/app/su-action-buttons`](../../app/su-action-buttons)
 - Component Selector: `su-action-buttons`
 
 ## Description
 
-This add-on provides a starter action button component registered under the `su-action-buttons` add-on profile and mapped to the end of the `nde-record-actions` slot.
+This add-on provides a starter action button component registered under the `su-action-buttons` add-on profile and mapped after the NDE main action buttons.
 
 ## Configuration
 

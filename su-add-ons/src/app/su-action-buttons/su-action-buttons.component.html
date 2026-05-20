@@ -1,4 +1,4 @@
-<div class="su-action-buttons flex-row action-button-container" aria-label="Record actions">
+<div *ngIf="shouldRender" class="su-action-buttons flex-row action-button-container" aria-label="Record actions">
   <a
     *ngFor="let action of actions"
     class="su-action-button center-actions-icons action-button"
