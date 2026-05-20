@@ -1,17 +1,13 @@
 import { Component, Inject, Input, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-interface SuActionButtonConfig {
+interface SuActionButtonsConfig {
   label?: string;
   ariaLabel?: string;
   link?: string;
   url?: string;
   target?: string;
   iconUrl?: string;
-}
-
-interface SuActionButtonsConfig {
-  actions?: SuActionButtonConfig[];
 }
 
 interface SuActionButton {
@@ -42,33 +38,25 @@ export class SuActionButtonsComponent {
   constructor(
     @Optional() @Inject('MODULE_PARAMETERS') moduleParameters?: SuActionButtonsConfig
   ) {
-    this.actions = this.normalizeActions(moduleParameters?.actions);
+    this.actions = this.normalizeAction(moduleParameters);
   }
 
-  private normalizeActions(actions?: SuActionButtonConfig[]): SuActionButton[] {
-    const configuredActions = Array.isArray(actions) && actions.length > 0
-      ? actions
-      : [
-          {
-            label: 'Report an error',
-            ariaLabel: 'Report an error with this record',
-            link: 'mailto:youremail@domain.com',
-            target: '_blank',
-            iconUrl: defaultExclamationCircleIconUrl
-          }
-        ];
+  private normalizeAction(config?: SuActionButtonsConfig): SuActionButton[] {
+    const action = {
+      label: config?.label || 'Report an error',
+      ariaLabel: config?.ariaLabel || config?.label || 'Report an error with this record',
+      link: config?.link || config?.url || 'mailto:youremail@domain.com',
+      target: config?.target || '_blank',
+      iconUrl: config?.iconUrl || defaultExclamationCircleIconUrl
+    };
 
-    return configuredActions
-      .map((action) => ({
-        label: action.label || 'Record action',
-        ariaLabel: action.ariaLabel || action.label || 'Record action',
-        link: action.link || action.url || '',
-        target: action.target || '_blank',
-        iconUrl: action.iconUrl || defaultExclamationCircleIconUrl,
-        iconMaskUrl: this.toCssUrl(action.iconUrl || defaultExclamationCircleIconUrl),
+    return [
+      {
+        ...action,
+        iconMaskUrl: this.toCssUrl(action.iconUrl),
         iconLoadFailed: false
-      }))
-      .filter((action) => action.link);
+      }
+    ];
   }
 
   markIconFailed(action: SuActionButton): void {

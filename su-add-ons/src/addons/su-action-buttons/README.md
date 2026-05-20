@@ -15,19 +15,15 @@ This add-on provides a starter action button component registered under the `su-
 
 ## Configuration
 
-Use `actions` to add one or more icon links to the record actions area.
+Use these top-level fields to configure the icon link in the record actions area.
 
 ```json
 {
-  "actions": [
-    {
-      "label": "Report a problem",
-      "ariaLabel": "Report a problem with this record",
-      "link": "https://example.com/report",
-      "target": "_blank",
-      "iconUrl": "https://example.com/exclamation-circle.svg"
-    }
-  ]
+  "label": "Report an error",
+  "ariaLabel": "Report an error with this record",
+  "link": "mailto:youremail@domain.com",
+  "target": "_blank",
+  "iconUrl": "https://example.com/exclamation-circle.svg"
 }
 ```
 
