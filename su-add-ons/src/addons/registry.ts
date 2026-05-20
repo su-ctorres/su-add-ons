@@ -1,10 +1,10 @@
 import { AddonRuntimeProfile } from './addon-profile.types';
-import { orcaTestBannerProfile } from './orca-test-banner';
+import { suTestBannerProfile } from './su-test-banner';
 import { orcaExternalSearchProfile } from './orca-external-search';
 import { orcaDisplayMmsidProfile } from './orca-display-mmsid';
 
 const addonProfiles: Record<string, AddonRuntimeProfile> = {
-  'orca-test-banner': orcaTestBannerProfile,
+  'su-test-banner': suTestBannerProfile,
   'orca-external-search': orcaExternalSearchProfile,
   'orca-display-mmsid': orcaDisplayMmsidProfile
 };

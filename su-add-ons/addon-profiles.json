@@ -1,9 +1,9 @@
 {
   "addons": {
-    "orca-test-banner": {
-      "buildName": "orca-test-banner",
-      "remoteName": "orcaTestBanner",
-      "exposedModule": "./orca-test-banner"
+    "su-test-banner": {
+      "buildName": "su-test-banner",
+      "remoteName": "suTestBanner",
+      "exposedModule": "./su-test-banner"
     },
     "orca-external-search": {
       "buildName": "orca-external-search",

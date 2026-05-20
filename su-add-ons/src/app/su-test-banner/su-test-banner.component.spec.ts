@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrcaTestBannerComponent } from './orca-test-banner.component';
+import { SuTestBannerComponent } from './su-test-banner.component';
 
-describe('OrcaTestBannerComponent', () => {
-  let component: OrcaTestBannerComponent;
-  let fixture: ComponentFixture<OrcaTestBannerComponent>;
+describe('SuTestBannerComponent', () => {
+  let component: SuTestBannerComponent;
+  let fixture: ComponentFixture<SuTestBannerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OrcaTestBannerComponent]
+      imports: [SuTestBannerComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(OrcaTestBannerComponent);
+    fixture = TestBed.createComponent(SuTestBannerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
