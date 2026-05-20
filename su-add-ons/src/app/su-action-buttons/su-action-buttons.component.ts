@@ -1,13 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  Inject,
-  Input,
-  OnDestroy,
-  Optional
-} from '@angular/core';
+import { Component, Inject, Input, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface SuActionButtonsConfig {
@@ -17,6 +8,7 @@ interface SuActionButtonsConfig {
   url?: string;
   target?: string;
   iconUrl?: string;
+  tooltip?: string;
 }
 
 interface SuActionButton {
@@ -27,6 +19,7 @@ interface SuActionButton {
   iconUrl: string;
   iconMaskUrl: string;
   iconLoadFailed: boolean;
+  tooltip: string;
 }
 
 const defaultExclamationCircleIconUrl = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 -960 960 960%22%3E%3Cpath fill=%22%235f6368%22 d=%22M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z%22/%3E%3C/svg%3E';
@@ -38,29 +31,16 @@ const defaultExclamationCircleIconUrl = 'data:image/svg+xml,%3Csvg xmlns=%22http
   templateUrl: './su-action-buttons.component.html',
   styleUrls: ['./su-action-buttons.component.scss']
 })
-export class SuActionButtonsComponent implements AfterViewInit, OnDestroy {
+export class SuActionButtonsComponent {
   @Input() hostComponent?: any;
   @Input() parentCtrl?: any;
 
   actions: SuActionButton[];
-  shouldRender = false;
-  private mutationObserver?: MutationObserver;
 
   constructor(
-    private elementRef: ElementRef<HTMLElement>,
-    private changeDetectorRef: ChangeDetectorRef,
     @Optional() @Inject('MODULE_PARAMETERS') moduleParameters?: SuActionButtonsConfig
   ) {
     this.actions = this.normalizeAction(moduleParameters);
-  }
-
-  ngAfterViewInit(): void {
-    this.updateRenderState();
-    this.observeContainerChanges();
-  }
-
-  ngOnDestroy(): void {
-    this.mutationObserver?.disconnect();
   }
 
   private normalizeAction(config?: SuActionButtonsConfig): SuActionButton[] {
@@ -69,7 +49,8 @@ export class SuActionButtonsComponent implements AfterViewInit, OnDestroy {
       ariaLabel: config?.ariaLabel || config?.label || 'Report an error with this record',
       link: config?.link || config?.url || 'mailto:youremail@domain.com',
       target: config?.target || '_blank',
-      iconUrl: config?.iconUrl || defaultExclamationCircleIconUrl
+      iconUrl: config?.iconUrl || defaultExclamationCircleIconUrl,
+      tooltip: config?.tooltip || 'Click to report an error'
     };
 
     return [
@@ -83,40 +64,6 @@ export class SuActionButtonsComponent implements AfterViewInit, OnDestroy {
 
   markIconFailed(action: SuActionButton): void {
     action.iconLoadFailed = true;
-  }
-
-  private updateRenderState(): void {
-    const shouldRender = this.isAfterLastMainAction();
-
-    if (this.shouldRender !== shouldRender) {
-      this.shouldRender = shouldRender;
-      this.changeDetectorRef.detectChanges();
-    }
-  }
-
-  private observeContainerChanges(): void {
-    const container = this.elementRef.nativeElement.parentElement;
-
-    if (!container) {
-      return;
-    }
-
-    this.mutationObserver = new MutationObserver(() => this.updateRenderState());
-    this.mutationObserver.observe(container, { childList: true });
-  }
-
-  private isAfterLastMainAction(): boolean {
-    let sibling = this.elementRef.nativeElement.nextElementSibling;
-
-    while (sibling) {
-      if (sibling.tagName.toLowerCase() === 'nde-main-actions') {
-        return false;
-      }
-
-      sibling = sibling.nextElementSibling;
-    }
-
-    return true;
   }
 
   private toCssUrl(url: string): string {
