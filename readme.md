@@ -6,6 +6,10 @@ This repository hosts multiple add-ons that share the same `customModule-main` b
 
 - [`su-test-banner`](./su-add-ons/src/addons/su-test-banner/README.md)
 
+## Add-ons (Development)
+
+- [`su-action-buttons`](./su-add-ons/src/addons/su-action-buttons/README.md)
+
 ## Adding a New Component
 
 Creating a new component is the same as in `customModule-main`. Add-on names should use the `su-` prefix, for example `su-test-banner`.
