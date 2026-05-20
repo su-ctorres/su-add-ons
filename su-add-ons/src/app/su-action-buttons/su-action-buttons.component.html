@@ -1,4 +1,4 @@
-<div *ngIf="shouldRender" class="su-action-buttons flex-row action-button-container" aria-label="Record actions">
+<div class="su-action-buttons flex-row action-button-container" aria-label="Record actions">
   <a
     *ngFor="let action of actions"
     class="su-action-button center-actions-icons action-button"
@@ -6,7 +6,7 @@
     [target]="action.target"
     rel="noopener noreferrer"
     [attr.aria-label]="action.ariaLabel"
-    [title]="action.label"
+    [attr.aria-describedby]="'su-action-buttons-tooltip'"
   >
     <img
       class="su-action-button-icon-probe"
@@ -24,6 +24,9 @@
     <ng-template #iconFallback>
       <span class="su-action-button-icon-fallback" aria-hidden="true">!</span>
     </ng-template>
+    <span id="su-action-buttons-tooltip" class="su-action-button-tooltip" role="tooltip">
+      {{ action.tooltip }}
+    </span>
     <span class="su-action-button-label">{{ action.label }}</span>
   </a>
 </div>

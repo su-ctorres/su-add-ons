@@ -5,6 +5,6 @@ export const suActionButtonsProfile: AddonRuntimeProfile = {
   key: 'su-action-buttons',
   buildName: 'su-action-buttons',
   selectorComponentMap: new Map<string, any>([
-    ['nde-main-actions-after', SuActionButtonsComponent]
+    ['nde-record-actions-after', SuActionButtonsComponent]
   ])
 };
