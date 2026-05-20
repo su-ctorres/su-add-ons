@@ -1,0 +1,11 @@
+{
+  "actions": [
+    {
+      "label": "Report an error",
+      "ariaLabel": "Report an error with this record",
+      "link": "mailto:youremail@domain.com",
+      "target": "_blank",
+      "iconUrl": "https://example.com/exclamation-circle.svg"
+    }
+  ]
+}

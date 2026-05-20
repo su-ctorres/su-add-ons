@@ -1,0 +1,29 @@
+<div class="su-action-buttons flex-row action-button-container" aria-label="Record actions">
+  <a
+    *ngFor="let action of actions"
+    class="su-action-button center-actions-icons action-button"
+    [href]="action.link"
+    [target]="action.target"
+    rel="noopener noreferrer"
+    [attr.aria-label]="action.ariaLabel"
+    [title]="action.label"
+  >
+    <img
+      class="su-action-button-icon-probe"
+      [src]="action.iconUrl"
+      alt=""
+      aria-hidden="true"
+      (error)="markIconFailed(action)"
+    />
+    <span
+      *ngIf="!action.iconLoadFailed; else iconFallback"
+      class="su-action-button-icon"
+      [style.--su-action-icon-url]="action.iconMaskUrl"
+      aria-hidden="true"
+    ></span>
+    <ng-template #iconFallback>
+      <span class="su-action-button-icon-fallback" aria-hidden="true">!</span>
+    </ng-template>
+    <span class="su-action-button-label">{{ action.label }}</span>
+  </a>
+</div>

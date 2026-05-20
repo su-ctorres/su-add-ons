@@ -1,0 +1,71 @@
+.su-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.su-action-button {
+  align-items: center;
+  border-radius: 50%;
+  color: var(--mat-sys-on-surface-variant, #5f6368);
+  cursor: pointer;
+  display: inline-flex;
+  height: 40px;
+  justify-content: center;
+  text-decoration: none;
+  width: 40px;
+}
+
+.su-action-button:hover,
+.su-action-button:focus-visible {
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  outline: none;
+}
+
+.su-action-button-icon {
+  background-color: currentColor;
+  display: block;
+  height: 24px;
+  mask-image: var(--su-action-icon-url);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-image: var(--su-action-icon-url);
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  width: 24px;
+}
+
+.su-action-button-icon-fallback {
+  align-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  display: inline-flex;
+  font-size: 18px;
+  font-weight: 700;
+  height: 22px;
+  justify-content: center;
+  line-height: 1;
+  width: 22px;
+}
+
+.su-action-button-icon-probe {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 0;
+}
+
+.su-action-button-label {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
