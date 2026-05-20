@@ -1,7 +1,23 @@
-.su-action-buttons {
-  display: flex;
+:host {
   align-items: center;
-  gap: 4px;
+  display: inline-flex;
+  flex: 0 0 40px;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
+}
+
+.su-action-buttons {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 40px;
+  height: 40px;
+  justify-content: center;
+  line-height: 1;
+  margin: 0;
+  max-height: 40px;
+  padding: 0;
+  width: 40px;
 }
 
 .su-action-button {
@@ -10,8 +26,10 @@
   color: var(--mat-sys-on-surface-variant, #5f6368);
   cursor: pointer;
   display: inline-flex;
+  flex: 0 0 40px;
   height: 40px;
   justify-content: center;
+  line-height: 1;
   position: relative;
   text-decoration: none;
   width: 40px;
@@ -62,7 +80,6 @@
 .su-action-button-tooltip {
   background: #000;
   border-radius: 4px;
-  bottom: calc(100% + 8px);
   color: #fff;
   font-size: 12px;
   font-weight: 400;
@@ -74,6 +91,7 @@
   pointer-events: none;
   position: absolute;
   text-align: center;
+  top: calc(100% + 8px);
   transform: translateX(-50%);
   transition: opacity 120ms ease-in-out;
   visibility: hidden;
@@ -82,13 +100,13 @@
 }
 
 .su-action-button-tooltip::after {
-  border-color: #000 transparent transparent transparent;
+  border-color: transparent transparent #000 transparent;
   border-style: solid;
-  border-width: 5px 5px 0 5px;
+  border-width: 0 5px 5px 5px;
+  bottom: 100%;
   content: '';
   left: 50%;
   position: absolute;
-  top: 100%;
   transform: translateX(-50%);
 }
 
