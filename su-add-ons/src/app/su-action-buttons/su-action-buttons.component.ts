@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, Input, Optional } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, Input, OnDestroy, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface SuActionButtonsConfig {
@@ -31,11 +31,13 @@ const defaultExclamationCircleIconUrl = 'data:image/svg+xml,%3Csvg xmlns=%22http
   templateUrl: './su-action-buttons.component.html',
   styleUrls: ['./su-action-buttons.component.scss']
 })
-export class SuActionButtonsComponent implements AfterViewInit {
+export class SuActionButtonsComponent implements AfterViewInit, OnDestroy {
   @Input() hostComponent?: any;
   @Input() parentCtrl?: any;
 
   actions: SuActionButton[];
+  shouldRender = true;
+  private tooltipElement?: HTMLSpanElement;
 
   constructor(
     private elementRef: ElementRef<HTMLElement>,
@@ -45,7 +47,11 @@ export class SuActionButtonsComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    queueMicrotask(() => this.moveIntoRecordActionsContainer());
+    queueMicrotask(() => this.initializePlacement());
+  }
+
+  ngOnDestroy(): void {
+    this.destroyTooltipElement();
   }
 
   private normalizeAction(config?: SuActionButtonsConfig): SuActionButton[] {
@@ -71,6 +77,34 @@ export class SuActionButtonsComponent implements AfterViewInit {
     action.iconLoadFailed = true;
   }
 
+  showTooltip(event: Event, action: SuActionButton): void {
+    const button = event.currentTarget as HTMLElement;
+    const rect = button.getBoundingClientRect();
+    const tooltip = this.getTooltipElement();
+
+    tooltip.textContent = action.tooltip;
+    tooltip.style.left = `${rect.left + rect.width / 2}px`;
+    tooltip.style.top = `${rect.bottom + 8}px`;
+    tooltip.hidden = false;
+  }
+
+  hideTooltip(): void {
+    if (this.tooltipElement) {
+      this.tooltipElement.hidden = true;
+    }
+  }
+
+  private initializePlacement(): void {
+    if (this.isInsideSearchResultsTopBar()) {
+      this.shouldRender = false;
+      this.elementRef.nativeElement.style.display = 'none';
+      return;
+    }
+
+    this.elementRef.nativeElement.style.display = '';
+    this.moveIntoRecordActionsContainer();
+  }
+
   private moveIntoRecordActionsContainer(): void {
     const host = this.elementRef.nativeElement;
     const injectedWrapper = host.parentElement;
@@ -86,6 +120,47 @@ export class SuActionButtonsComponent implements AfterViewInit {
     if (injectedWrapper && injectedWrapper.childElementCount === 0) {
       injectedWrapper.remove();
     }
+  }
+
+  private isInsideSearchResultsTopBar(): boolean {
+    return Boolean(this.elementRef.nativeElement.closest('nde-search-results-top-bar'));
+  }
+
+  private getTooltipElement(): HTMLSpanElement {
+    if (this.tooltipElement) {
+      return this.tooltipElement;
+    }
+
+    const tooltip = document.createElement('span');
+    tooltip.id = 'su-action-buttons-tooltip';
+    tooltip.className = 'su-action-button-global-tooltip';
+    tooltip.setAttribute('role', 'tooltip');
+    tooltip.hidden = true;
+    Object.assign(tooltip.style, {
+      background: '#000',
+      borderRadius: '4px',
+      color: '#fff',
+      fontSize: '12px',
+      fontWeight: '400',
+      lineHeight: '16px',
+      maxWidth: '180px',
+      padding: '6px 8px',
+      pointerEvents: 'none',
+      position: 'fixed',
+      textAlign: 'center',
+      transform: 'translateX(-50%)',
+      whiteSpace: 'nowrap',
+      zIndex: '2147483647'
+    });
+
+    document.body.appendChild(tooltip);
+    this.tooltipElement = tooltip;
+    return tooltip;
+  }
+
+  private destroyTooltipElement(): void {
+    this.tooltipElement?.remove();
+    this.tooltipElement = undefined;
   }
 
   private toCssUrl(url: string): string {
