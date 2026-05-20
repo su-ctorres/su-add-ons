@@ -5,6 +5,11 @@
       "remoteName": "suTestBanner",
       "exposedModule": "./su-test-banner"
     },
+    "su-action-buttons": {
+      "buildName": "su-action-buttons",
+      "remoteName": "suActionButtons",
+      "exposedModule": "./su-action-buttons"
+    },
     "orca-external-search": {
       "buildName": "orca-external-search",
       "remoteName": "orcaExternalSearch",
