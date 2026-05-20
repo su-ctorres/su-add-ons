@@ -29,20 +29,20 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: orca-add-ons/package-lock.json
+          cache-dependency-path: su-add-ons/package-lock.json
 
       - name: Install dependencies
-        working-directory: orca-add-ons
+        working-directory: su-add-ons
         run: npm ci
 
       - name: Build add-ons
-        working-directory: orca-add-ons
+        working-directory: su-add-ons
         run: npm run build
 
       - name: Prepare Pages artifact
         run: |
           mkdir -p dist
-          cp -R orca-add-ons/dist/addons dist/addons
+          cp -R su-add-ons/dist/addons dist/addons
           find dist/addons -maxdepth 2 -type f | sort
 
       - name: Upload Pages artifact
