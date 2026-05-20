@@ -1,4 +1,4 @@
-import { Component, Inject, Input, Optional } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, Input, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface SuActionButtonsConfig {
@@ -31,16 +31,21 @@ const defaultExclamationCircleIconUrl = 'data:image/svg+xml,%3Csvg xmlns=%22http
   templateUrl: './su-action-buttons.component.html',
   styleUrls: ['./su-action-buttons.component.scss']
 })
-export class SuActionButtonsComponent {
+export class SuActionButtonsComponent implements AfterViewInit {
   @Input() hostComponent?: any;
   @Input() parentCtrl?: any;
 
   actions: SuActionButton[];
 
   constructor(
+    private elementRef: ElementRef<HTMLElement>,
     @Optional() @Inject('MODULE_PARAMETERS') moduleParameters?: SuActionButtonsConfig
   ) {
     this.actions = this.normalizeAction(moduleParameters);
+  }
+
+  ngAfterViewInit(): void {
+    queueMicrotask(() => this.moveIntoRecordActionsContainer());
   }
 
   private normalizeAction(config?: SuActionButtonsConfig): SuActionButton[] {
@@ -64,6 +69,23 @@ export class SuActionButtonsComponent {
 
   markIconFailed(action: SuActionButton): void {
     action.iconLoadFailed = true;
+  }
+
+  private moveIntoRecordActionsContainer(): void {
+    const host = this.elementRef.nativeElement;
+    const injectedWrapper = host.parentElement;
+    const actionsPresenter = host.closest('nde-actions-presenter');
+    const recordActionsContainer = actionsPresenter?.querySelector('.record-actions-container');
+
+    if (!recordActionsContainer || host.parentElement === recordActionsContainer) {
+      return;
+    }
+
+    recordActionsContainer.appendChild(host);
+
+    if (injectedWrapper && injectedWrapper.childElementCount === 0) {
+      injectedWrapper.remove();
+    }
   }
 
   private toCssUrl(url: string): string {
