@@ -5,6 +5,6 @@ export const suUserLinksProfile: AddonRuntimeProfile = {
   key: 'su-user-links',
   buildName: 'su-user-links',
   selectorComponentMap: new Map<string, any>([
-    ['su-user-links', SuUserLinksComponent]
+    ['nde-user-area-after', SuUserLinksComponent]
   ])
 };
