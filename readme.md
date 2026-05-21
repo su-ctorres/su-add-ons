@@ -4,11 +4,19 @@ This repository hosts multiple add-ons that share the same `customModule-main` b
 
 ## Add-ons
 
+### Main
+
 - [`su-test-banner`](./su-add-ons/src/addons/su-test-banner/README.md)
 
-## Add-ons (Development)
+### Shared
+
+- [`orca-display-mmsid`](./su-add-ons/src/addons/orca-display-mmsid/README.md)
+- [`orca-external-search`](./su-add-ons/src/addons/orca-external-search/README.md)
+
+### Development
 
 - [`su-action-buttons`](./su-add-ons/src/addons/su-action-buttons/README.md)
+- [`su-user-links`](./su-add-ons/src/addons/su-user-links/README.md)
 
 ## Adding a New Component
 
