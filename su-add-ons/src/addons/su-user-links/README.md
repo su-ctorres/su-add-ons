@@ -3,6 +3,7 @@
 ## Details
 
 - Name: `su-user-links`
+- URL: `https://su-ctorres.github.io/su-add-ons/su-user-links/`
 - Configuration JSON Template: [su-user-links.json](./su-user-links.json)
 - Component Folder: [`src/app/su-user-links`](../../app/su-user-links)
 - Component Selector: `su-user-links`
