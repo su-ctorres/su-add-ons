@@ -10,6 +10,11 @@
       "remoteName": "suActionButtons",
       "exposedModule": "./su-action-buttons"
     },
+    "su-user-links": {
+      "buildName": "su-user-links",
+      "remoteName": "suUserLinks",
+      "exposedModule": "./su-user-links"
+    },
     "orca-external-search": {
       "buildName": "orca-external-search",
       "remoteName": "orcaExternalSearch",
