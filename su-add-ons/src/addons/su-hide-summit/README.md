@@ -11,9 +11,9 @@
 
 ## Description
 
-Hides the existing NDE Summit resource sharing request card when the `Summit Holdings:` section is present on the page.
+Hides the existing NDE Summit resource sharing request card when the `Summit Holdings:` section is not present on the page.
 
-The add-on does not render its own visible content. It watches the NDE page DOM and removes the existing `AlmaResourceSharing` request card after the Summit holdings area renders.
+The add-on does not render its own visible content. It watches the NDE page DOM and removes the existing `AlmaResourceSharing` request card unless the Summit holdings area is present.
 
 ## Configuration
 
@@ -41,7 +41,7 @@ The component checks for the Summit holdings section in the rendered page:
 nde-full-display-service-container .getit_other
 ```
 
-If that section contains the text `Summit Holdings:`, the component removes:
+If that section does not contain the text `Summit Holdings:`, the component removes:
 
 ```css
 nde-request-card[data-qa="AlmaResourceSharing"]

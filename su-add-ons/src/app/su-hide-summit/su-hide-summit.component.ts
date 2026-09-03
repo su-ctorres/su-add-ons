@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 
-
 const requestCardSelector = 'nde-request-card[data-qa="AlmaResourceSharing"]';
 const summitHoldingsSelector = 'nde-full-display-service-container .getit_other';
 const summitHoldingsLabel = 'Summit Holdings:';
@@ -14,7 +13,7 @@ export class SuHideSummitComponent implements AfterViewInit, OnDestroy {
   private observer?: MutationObserver;
 
   ngAfterViewInit(): void {
-    this.hideRequestCardWhenSummitHoldingsRender();
+    this.hideRequestCardWhenSummitHoldingsIsMissing();
     this.observePageChanges();
   }
 
@@ -23,7 +22,7 @@ export class SuHideSummitComponent implements AfterViewInit, OnDestroy {
   }
 
   private observePageChanges(): void {
-    this.observer = new MutationObserver(() => this.hideRequestCardWhenSummitHoldingsRender());
+    this.observer = new MutationObserver(() => this.hideRequestCardWhenSummitHoldingsIsMissing());
 
     this.observer.observe(document.body, {
       childList: true,
@@ -31,12 +30,14 @@ export class SuHideSummitComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  private hideRequestCardWhenSummitHoldingsRender(): void {
-    const summitHoldingsSection = Array.from(document.querySelectorAll(summitHoldingsSelector))
-      .find((element) => element.textContent?.includes(summitHoldingsLabel));
-
-    if (summitHoldingsSection) {
+  private hideRequestCardWhenSummitHoldingsIsMissing(): void {
+    if (!this.summitHoldingsIsOnPage()) {
       document.querySelector(requestCardSelector)?.remove();
     }
+  }
+
+  private summitHoldingsIsOnPage(): boolean {
+    return Array.from(document.querySelectorAll(summitHoldingsSelector))
+      .some((element) => element.textContent?.includes(summitHoldingsLabel));
   }
 }
