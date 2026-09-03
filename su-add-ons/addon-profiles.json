@@ -24,6 +24,11 @@
       "buildName": "orca-display-mmsid",
       "remoteName": "orcaDisplayMmsid",
       "exposedModule": "./orca-display-mmsid"
+    },
+    "su-hide-summit": {
+      "buildName": "su-hide-summit",
+      "remoteName": "suHideSummit",
+      "exposedModule": "./su-hide-summit"
     }
   }
 }
