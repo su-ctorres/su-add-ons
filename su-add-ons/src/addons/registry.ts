@@ -4,13 +4,15 @@ import { suActionButtonsProfile } from './su-action-buttons';
 import { suUserLinksProfile } from './su-user-links';
 import { orcaExternalSearchProfile } from './orca-external-search';
 import { orcaDisplayMmsidProfile } from './orca-display-mmsid';
+import { suHideSummitProfile } from './su-hide-summit';
 
 const addonProfiles: Record<string, AddonRuntimeProfile> = {
   'su-test-banner': suTestBannerProfile,
   'su-action-buttons': suActionButtonsProfile,
   'su-user-links': suUserLinksProfile,
   'orca-external-search': orcaExternalSearchProfile,
-  'orca-display-mmsid': orcaDisplayMmsidProfile
+  'orca-display-mmsid': orcaDisplayMmsidProfile,
+  'su-hide-summit': suHideSummitProfile
 };
 
 export function resolveAddonRuntimeProfile(addonKey: string): AddonRuntimeProfile {
