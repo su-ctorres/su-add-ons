@@ -11,9 +11,9 @@
 
 ## Description
 
-Hides the existing NDE Summit resource sharing request card on OpenURL pages when the record has no OCLC/ISBN identifier or when NDE delivery state reports no Summit holdings.
+Hides the existing NDE Summit resource sharing request card when the `Summit Holdings:` section is present on the page.
 
-The add-on does not render its own visible content. It watches the NDE page state and removes the existing `AlmaResourceSharing` request card only when Summit should not be offered.
+The add-on does not render its own visible content. It watches the NDE page DOM and removes the existing `AlmaResourceSharing` request card after the Summit holdings area renders.
 
 ## Configuration
 
@@ -23,12 +23,7 @@ The default configuration is empty:
 {}
 ```
 
-Optional parameters are available for local testing or future slot changes.
-
-| Parameter | Default | Description |
-|---|---|---|
-| `openUrlOnly` | `true` | Limits the hide behavior to OpenURL pages. |
-| `requestCardSelector` | `nde-request-card[data-qa="AlmaResourceSharing"]` | CSS selector for the existing Summit request card. |
+There are no configurable parameters right now.
 
 ## Development
 
@@ -40,13 +35,13 @@ The runtime mapping lives in `src/addons/su-hide-summit/index.ts`:
 ['nde-full-display-service-container-after', SuHideSummitComponent]
 ```
 
-The component checks three things:
+The component checks for the Summit holdings section in the rendered page:
 
-- The current page is an OpenURL page, unless `openUrlOnly` is set to `false`.
-- The record has an OCLC number or ISBN from either the OpenURL parameters or the PNX record data.
-- Summit holdings exist in NDE delivery state at `delivery.almaInstitutionList`.
+```css
+nde-full-display-service-container .getit_other
+```
 
-If no identifier exists, or if the delivery state is ready and `almaInstitutionList` is empty, the component removes:
+If that section contains the text `Summit Holdings:`, the component removes:
 
 ```css
 nde-request-card[data-qa="AlmaResourceSharing"]
