@@ -16,7 +16,7 @@ This repository hosts multiple add-ons that share the same `customModule-main` b
 ### Development
 
 - [`su-action-buttons`](./su-add-ons/src/addons/su-action-buttons/README.md)
-- [`su-hide-summit`](./su-add-ons/src/addons/su-hide-summit/README.md) - hides the Summit resource sharing request card when the Summit holdings area is present.
+- [`su-hide-summit`](./su-add-ons/src/addons/su-hide-summit/README.md) - hides the Summit resource sharing request card when the Summit holdings area is not present.
 - [`su-user-links`](./su-add-ons/src/addons/su-user-links/README.md)
 
 ## Adding a New Component
